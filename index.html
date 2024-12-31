@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome 2025!</title>
+    <!-- Adding favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNMjU2IDhDMTExIDggMCAxMTkgMCAyNjRzMTExIDI1NiAyNTYgMjU2czI1Ni0xMTEgMjU2LTI1NlMzOTEgOCAyNTYgOHoiIGZpbGw9IiNmOWQ0MjMiLz48cGF0aCBkPSJNMjU2IDEyOGMtMjUuNCAwLTQ3LjggMTIuOC02MS4yIDMyLjNDMTgxLjQgMTQ2LjUgMTY1LjggMTM4IDE0OCAxMzhjLTIyLjEgMC00MCAxNy45LTQwIDQwIDAgNS45IDEuMyAxMS40IDMuNiAxNi40QzExMS42IDE4OC44IDk2IDIwMi40IDk2IDIyMGMwIDIyLjEgMTcuOSA0MCA0MCA0MCAxMS4yIDAgMjEuNC00LjYgMjguNy0xMi4xIDcuNyA3LjUgMTguMyAxMi4xIDI5LjkgMTIuMSAxOS40IDAgMzUuOS0xMi45IDQxLjMtMzAuNiA2LjggNS4xIDE1LjMgOC4yIDI0LjYgOC4yIDIyLjEgMCA0MC0xNy45IDQwLTQwcy0xNy45LTQwLTQwLTQweiIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNzUlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmNGU1MCI+MjU8L3RleHQ+PC9zdmc+" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #000428, #004e92);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .countdown {
+            font-size: 5rem;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .message {
+            font-size: 2rem;
+            margin: 20px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .year {
+            font-size: 8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff4e50, #f9d423);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255,255,255,0.8),
+                            0 0 30px rgba(255,255,255,0.6),
+                            0 0 40px rgba(255,255,255,0.4);
+            }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(30);
+                opacity: 0;
+            }
+        }
+
+        .input-name {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 25px;
+            margin: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            outline: none;
+        }
+
+        .generate-button {
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #ff4e50, #f9d423);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .generate-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="countdown" class="countdown"></div>
+        <div class="year">2025</div>
+        <input type="text" class="input-name" placeholder="Enter your name" id="nameInput">
+        <button class="generate-button" onclick="generateWish()">Generate Wish</button>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * window.innerWidth + 'px';
+            firework.style.top = Math.random() * window.innerHeight + 'px';
+            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(firework);
+            
+            setTimeout(() => {
+                document.body.removeChild(firework);
+            }, 1000);
+        }
+
+        setInterval(createFirework, 300);
+
+        function updateCountdown() {
+            const now = new Date();
+            const newYear = new Date('January 1, 2025 00:00:00');
+            const diff = newYear - now;
+
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = 
+                `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        const wishes = [
+            "May your 2025 be filled with endless possibilities and beautiful moments!",
+            "Here's to 365 new chances to make your dreams come true!",
+            "Wishing you a year of innovation, growth, and incredible achievements!",
+            "May 2025 bring you joy, success, and countless reasons to smile!",
+            "Here's to new beginnings and amazing adventures in 2025!"
+        ];
+
+        function generateWish() {
+            const name = document.getElementById('nameInput').value || 'Friend';
+            const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+            const message = document.getElementById('message');
+            
+            message.innerHTML = `Dear ${name}, <br>${randomWish}`;
+            message.classList.remove('visible');
+            
+            // Force reflow
+            void message.offsetWidth;
+            
+            message.classList.add('visible');
+
+            // Create extra fireworks for celebration
+            for(let i = 0; i < 10; i++) {
+                setTimeout(createFirework, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
